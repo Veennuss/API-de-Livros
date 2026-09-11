@@ -1,7 +1,6 @@
 // ============================================================
 // ELEMENTOS DA PÁGINA
 // ============================================================
-
 // Formulário de pesquisa
 const formPesquisa = document.getElementById("formPesquisa");
 
