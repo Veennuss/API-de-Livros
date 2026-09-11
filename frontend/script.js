@@ -2,88 +2,270 @@
 // ELEMENTOS DA PÁGINA
 // ============================================================
 
-const formLivro = document.querySelector('#formLivro');
-const inputTitulo = document.querySelector('#inputTituto'); // Mantido com o ID do seu HTML
-const botaoBuscar = document.querySelector('#botaoBuscar');
-const mensagem = document.querySelector('#mensagem');
-const listaResultados = document.querySelector('#listaResultado');
-const resultado = document.querySelector('#resultado'); 
-const estadoInicial = document.querySelector('#estadoInicial'); 
+// Formulário de pesquisa
+const formPesquisa = document.getElementById("formPesquisa");
+
+// Campo onde o usuário digita o título
+const campoTitulo = document.getElementById("titulo");
+
+// Área onde os resultados serão exibidos
+const resultados = document.getElementById("resultados");
+
+// Área das mensagens
+const mensagem = document.getElementById("mensagem");
+
+// Área de resultado, caso exista no HTML
+const resultado = document.getElementById("resultado");
+
+// Área do estado inicial, caso exista no HTML
+const estadoInicial = document.getElementById("estadoInicial");
+
+// Botão de pesquisa
+const botaoBuscar = document.getElementById("botaoBuscar");
 
 // Endereço do nosso BACKEND
-const API = 'http://localhost:3000';
+const API = "http://localhost:3000";
+
 
 // ============================================================
-// CONSULTA DE LIVROS
+// PESQUISA DE LIVROS
 // ============================================================
 
-formLivro.addEventListener('submit', async (e) => {
-  e.preventDefault(); // Evita o recarregamento da página
+formPesquisa.addEventListener("submit", async function (evento) {
 
-  const tituloBuscado = inputTitulo.value.trim();
+    // Impede a página de recarregar
+    evento.preventDefault();
 
-  if (!tituloBuscado) {
-    mensagem.innerText = 'Por favor, digite o título de um livro.';
-    return;
-  }
+    // Pega o título digitado
+    const titulo = campoTitulo.value.trim();
 
-  try {
-    botaoBuscar.disabled = true;
-    botaoBuscar.innerText = 'Buscando...';
-    mensagem.innerText = 'Consultando nossa API...';
 
-    // Limpa resultados anteriores da tela
-    if (listaResultados) {
-      listaResultados.innerHTML = '';
+    // ========================================================
+    // VERIFICA SE O CAMPO ESTÁ VAZIO
+    // ========================================================
+
+    if (titulo === "") {
+
+        mensagem.textContent = "Digite o título de um livro.";
+
+        resultados.innerHTML = "";
+
+        return;
     }
 
-    // O FRONTEND chama o nosso BACKEND passando o título digitado
-    const resposta = await fetch(`\({API}/api/livros/pesquisa?titulo=\){encodeURIComponent(tituloBuscado)}`);
 
-    // Transforma a resposta em JSON
-    const dados = await resposta.json();
+    // ========================================================
+    // PREPARA A PESQUISA
+    // ========================================================
 
-    // Se o backend retornar erro (400, 404, 500...)
-    if (!resposta.ok) {
-      mensagem.innerText = dados.mensagem || 'Não foi possível buscar os livros.';
-      return;
+    mensagem.textContent = "🔄 Pesquisando livros...";
+
+    resultados.innerHTML = "";
+
+    // Desativa o botão durante a pesquisa
+    if (botaoBuscar) {
+        botaoBuscar.disabled = true;
+        botaoBuscar.textContent = "Buscando...";
     }
 
-    // Pega a lista de livros (garantindo pegar no máximo os 5 primeiros)
-    const livros = Array.isArray(dados) ? dados.slice(0, 5) : (dados.items ? dados.items.slice(0, 5) : []);
 
-    if (livros.length === 0) {
-      mensagem.innerText = 'Nenhum livro encontrado.';
-      return;
+    try {
+
+        /*
+         * O FRONTEND chama SOMENTE o nosso BACKEND.
+         *
+         * O BACKEND é responsável por consultar
+         * a Open Library.
+         */
+
+        const resposta = await fetch(
+            `${API}/api/livros/pesquisa?titulo=${encodeURIComponent(titulo)}`
+        );
+
+
+        // ====================================================
+        // VERIFICA SE O BACKEND RETORNOU ERRO
+        // ====================================================
+
+        if (!resposta.ok) {
+
+            if (resposta.status === 404) {
+
+                mensagem.textContent = "📚 Nenhum livro encontrado.";
+
+            } else {
+
+                mensagem.textContent =
+                    "⚠️ Ocorreu um erro na pesquisa.";
+            }
+
+            return;
+        }
+
+
+        // ====================================================
+        // CONVERTE A RESPOSTA PARA JSON
+        // ====================================================
+
+        const dados = await resposta.json();
+
+
+        // ====================================================
+        // PEGA A LISTA DE LIVROS
+        // ====================================================
+
+        // Caso o backend retorne diretamente um array
+        // ou retorne um objeto com a propriedade "items"
+
+        const livros = Array.isArray(dados)
+            ? dados.slice(0, 5)
+            : dados.items
+                ? dados.items.slice(0, 5)
+                : [];
+
+
+        // ====================================================
+        // VERIFICA SE NÃO ENCONTROU LIVROS
+        // ====================================================
+
+        if (!livros || livros.length === 0) {
+
+            mensagem.textContent = "📚 Nenhum livro encontrado.";
+
+            return;
+        }
+
+
+        // Limpa a mensagem
+        mensagem.textContent = "";
+
+
+        // ====================================================
+        // CRIA OS CARDS DOS LIVROS
+        // ====================================================
+
+        livros.forEach(function (livro) {
+
+            /*
+             * Se o backend retornar os dados dentro de
+             * volumeInfo, usamos volumeInfo.
+             *
+             * Caso contrário, usamos o próprio livro.
+             */
+
+            const info = livro.volumeInfo || livro;
+
+
+            // Título
+            const tituloLivro =
+                info.title ||
+                info.titulo ||
+                "Título não informado";
+
+
+            // Autor
+            let autorLivro = "Não informado";
+
+            if (info.authors) {
+
+                if (Array.isArray(info.authors)) {
+                    autorLivro = info.authors.join(", ");
+                } else {
+                    autorLivro = info.authors;
+                }
+
+            } else if (info.autor) {
+
+                autorLivro = info.autor;
+            }
+
+
+            // Ano
+            let anoLivro = "Não informado";
+
+            if (info.publishedDate) {
+
+                anoLivro = info.publishedDate.substring(0, 4);
+
+            } else if (info.ano) {
+
+                anoLivro = info.ano;
+            }
+
+
+            // =================================================
+            // CRIA O CARD
+            // =================================================
+
+            const card = document.createElement("article");
+
+            card.classList.add("card-livro");
+
+
+            card.innerHTML = `
+                <div class="icone-livro">📖</div>
+
+                <h3>${tituloLivro}</h3>
+
+                <p>
+                    <strong>Autor:</strong>
+                    ${autorLivro}
+                </p>
+
+                <p>
+                    <strong>Ano:</strong>
+                    ${anoLivro}
+                </p>
+            `;
+
+
+            // Coloca o card na tela
+            resultados.appendChild(card);
+        });
+
+
+        // ====================================================
+        // MOSTRA A ÁREA DE RESULTADOS
+        // ====================================================
+
+        if (resultado) {
+            resultado.classList.remove("oculto");
+        }
+
+        if (estadoInicial) {
+            estadoInicial.classList.add("oculto");
+        }
+
+
+        mensagem.textContent =
+            `📚 ${livros.length} livro(s) encontrado(s).`;
+
+
+    } catch (erro) {
+
+        // ====================================================
+        // ERRO DE CONEXÃO
+        // ====================================================
+
+        console.error(erro);
+
+        mensagem.textContent =
+            "⚠️ Não foi possível conectar ao servidor.";
     }
 
-    // Percorre cada livro do array e cria os elementos HTML para exibir
-    livros.forEach(livro => {
-      const info = livro.volumeInfo || livro;
 
-      const tituloLivro = info.title || 'Título não informado';
-      const autorLivro = info.authors ? (Array.isArray(info.authors) ? info.authors.join(', ') : info.authors) : (info.autor || 'Autor não informado');
-      const anoLivro = info.publishedDate ? info.publishedDate.substring(0, 4) : (info.ano || 'Ano não informado');
+    // ========================================================
+    // LIBERA O BOTÃO NOVAMENTE
+    // ========================================================
 
-      const itemLivro = document.createElement('div');
-      itemLivro.classList.add('livro-item');
+    finally {
 
-      itemLivro.innerHTML = ``;
+        if (botaoBuscar) {
 
-  if (listaResultados) {
-    listaResultados.appendChild(itemLivro);
-  }
-});
+            botaoBuscar.disabled = false;
 
-mensagem.innerText = 'Consulta realizada com sucesso!';
+            botaoBuscar.textContent = "Buscar";
+        }
+    }
 
-if (resultado) resultado.classList.remove('oculto');
-if (estadoInicial) estadoInicial.classList.add('oculto');
-} catch (erro) {
-console.error(erro);
-mensagem.innerText = 'Não foi possível conectar ao backend.';
-} finally {
-botaoBuscar.disabled = false;
-botaoBuscar.innerText = 'Buscar';
-}
 });

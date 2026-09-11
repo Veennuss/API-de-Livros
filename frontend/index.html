@@ -3,46 +3,100 @@
 
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-        content="Busca Livro - projeto educacional para consultar livros usando JavaScript, Fetch API e OpenLibrary."
-        <title>Busca Livro | Consulta de Livros</title>
+        content="Biblioteca Cloud - projeto educacional para consultar livros usando JavaScript, Fetch API e OpenLibrary.">
+
+    <title>Biblioteca Cloud | Busca de Livros</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header class="topo">
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+    <header class="cabecalho">
+
+        <img src="assets/4.jpg" alt="Biblioteca">
+
         <div class="topo-conteudo">
-            <a class="marca" href="#inicio" aria-label="Busca Livro - início">
+
+            <a class="marca" href="#inicio" aria-label="Biblioteca Cloud - início">
+
                 <span class="marca-icone">📚</span>
 
                 <span>
-                    <strong>Busca Livro</strong>
-                    <small>Cloud</small>
+                    <strong>Biblioteca Cloud</strong>
+                    <small>Busca de Livros</small>
                 </span>
+
             </a>
 
-            <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu"
-                aria-controls="menuPrincipal" aria-expanded="false">
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                type="button"
+                aria-label="Abrir menu"
+                aria-controls="menuPrincipal"
+                aria-expanded="false">
+
                 <span></span>
                 <span></span>
                 <span></span>
+
             </button>
 
-            <nav class="menu" id="menuPrincipal" aria-label="Navegação principal">
-                <a class="ativo" href="#inicio">Início</a>
-                <a href="#sobre">Sobre o Projeto</a>
-                <a href="#como-funciona">Como Funciona</a>
-                <a href="#tecnologias">Tecnologias</a>
-                <a href="#contato">Contato</a>
+
+            <!-- MENU -->
+
+            <nav
+                class="menu"
+                id="menuPrincipal"
+                aria-label="Navegação principal">
+
+                <a class="ativo" href="#inicio">
+                    Início
+                </a>
+
+                <a href="#sobre">
+                    Sobre o Projeto
+                </a>
+
+                <a href="#como-funciona">
+                    Como Funciona
+                </a>
+
+                <a href="#tecnologias">
+                    Tecnologias
+                </a>
+
+                <a href="#contato">
+                    Contato
+                </a>
+
             </nav>
 
         </div>
 
     </header>
+
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+         ===================================================== -->
+
     <main id="inicio">
-        <!-- HERO -->
+
+
+        <!-- =================================================
+             HERO
+             ================================================= -->
+
         <section class="hero">
 
             <div class="hero-conteudo">
@@ -54,67 +108,115 @@
                     </p>
 
                     <h1>
-                        Encontre livros em <span>tempo real</span> com JavaScript
+                        Encontre livros em
+                        <span>tempo real</span>
+                        com JavaScript
                     </h1>
 
                     <p class="descricao">
-                        Projeto educacional que consome a API OpenLibrary para
-                        buscar informações sobre livros de forma rápida,
-                        simples e moderna.
+
+                        Projeto educacional que utiliza uma API
+                        para buscar informações sobre livros de
+                        forma rápida, simples e moderna.
+
                     </p>
 
-                    <div class="chips" aria-label="Tecnologias usadas">
+
+                    <!-- TECNOLOGIAS -->
+
+                    <div
+                        class="chips"
+                        aria-label="Tecnologias usadas">
+
                         <span>HTML5</span>
                         <span>CSS3</span>
                         <span>JavaScript</span>
                         <span>Fetch API</span>
                         <span>JSON</span>
                         <span>OpenLibrary</span>
+
                     </div>
 
                 </div>
 
 
-                <!-- CARD DE CONSULTA -->
-                <section class="card-consulta" aria-labelledby="titulo-consulta">
+                <!-- =================================================
+                     CARD DE CONSULTA
+                     ================================================= -->
+
+                <section
+                    class="card-consulta"
+                    aria-labelledby="titulo-consulta">
+
 
                     <div class="card-titulo">
-                        <span class="pin">📖</span>
+
+                        <span class="pin">
+                            📖
+                        </span>
 
                         <h2 id="titulo-consulta">
                             Consultar Livro
                         </h2>
+
                     </div>
 
 
                     <!-- FORMULÁRIO -->
-                    <form id="formLivro">
 
-                        <label for="inputTituto">
+                    <form id="formPesquisa">
+
+                        <label for="titulo">
                             Digite o título do livro
                         </label>
 
+
                         <div class="campo-botao">
 
-                            <input type="text" id="inputTituto" placeholder="Ex.: Dom Casmurro" autocomplete="off">
+                            <input
+                                type="text"
+                                id="titulo"
+                                placeholder="Ex.: Dom Casmurro"
+                                autocomplete="off"
+                            >
 
-                            <button type="submit" id="botaoBuscar">
-                                Buscar
+
+                            <button
+                                type="submit"
+                                id="botaoBuscar">
+
+                                🔍 Buscar
+
                             </button>
 
                         </div>
 
-                        <p id="mensagem" class="mensagem" aria-live="polite"></p>
+
+                        <!-- MENSAGEM -->
+
+                        <p
+                            id="mensagem"
+                            class="mensagem"
+                            aria-live="polite">
+                        </p>
 
                     </form>
 
 
-                    <!-- RESULTADOS -->
-                    <section id="resultado" class="resultado oculto" aria-labelledby="titulo-resultados">
+                    <!-- =================================================
+                         RESULTADOS
+                         ================================================= -->
+
+                    <section
+                        id="resultado"
+                        class="resultado oculto"
+                        aria-labelledby="titulo-resultados">
+
 
                         <div class="resultado-cabecalho">
 
                             <div>
+
                                 <p class="mini-label">
                                     Resultado da consulta
                                 </p>
@@ -122,7 +224,9 @@
                                 <h3 id="titulo-resultados">
                                     Livros encontrados
                                 </h3>
+
                             </div>
+
 
                             <span class="resultado-icone">
                                 📚
@@ -132,17 +236,25 @@
 
 
                         <!--
-          O JavaScript irá inserir os livros aqui.
-          Exemplo:
-          <div class="livro-item">...</div>
-        -->
-                        <div id="listaResultado" class="lista-resultados"></div>
+                            O JavaScript coloca os livros
+                            encontrados aqui.
+                        -->
+
+                        <div
+                            id="resultados"
+                            class="lista-resultados">
+                        </div>
 
                     </section>
 
 
-                    <!-- ESTADO INICIAL -->
-                    <div id="estadoInicial" class="estado-inicial">
+                    <!-- =================================================
+                         ESTADO INICIAL
+                         ================================================= -->
+
+                    <div
+                        id="estadoInicial"
+                        class="estado-inicial">
 
                         <span class="estado-icone">
                             📖
@@ -162,8 +274,14 @@
         </section>
 
 
-        <!-- BENEFÍCIOS -->
-        <section id="sobre" class="beneficios secao-largura">
+        <!-- =================================================
+             SOBRE / BENEFÍCIOS
+             ================================================= -->
+
+        <section
+            id="sobre"
+            class="beneficios secao-largura">
+
 
             <article>
 
@@ -177,7 +295,7 @@
 
                 <p>
                     Consulta de livros utilizando
-                    a API OpenLibrary.
+                    uma API de livros.
                 </p>
 
             </article>
@@ -238,20 +356,35 @@
 
         </section>
 
-    </main> <!-- RODAPÉ -->
-    <footer id="contato" class="rodape">
+    </main>
+
+
+    <!-- =====================================================
+         RODAPÉ
+         ===================================================== -->
+
+    <footer
+        id="contato"
+        class="rodape">
+
+
         <div class="rodape-conteudo secao-largura">
 
+
+            <!-- COLUNA 1 -->
 
             <div class="rodape-coluna destaque-footer">
 
                 <div class="marca marca-footer">
 
                     <span>
-                        <strong>Busca Livro</strong>
+                        <strong>
+                            Biblioteca Cloud
+                        </strong>
                     </span>
 
                 </div>
+
 
                 <p>
                     Projeto educacional criado para aprender,
@@ -262,11 +395,14 @@
             </div>
 
 
+            <!-- COLUNA 2 -->
+
             <div class="rodape-coluna">
 
                 <h4>
                     Navegação
                 </h4>
+
 
                 <a href="#inicio">
                     Início
@@ -283,11 +419,16 @@
             </div>
 
 
-            <div id="tecnologias" class="rodape-coluna">
+            <!-- COLUNA 3 -->
+
+            <div
+                id="tecnologias"
+                class="rodape-coluna">
 
                 <h4>
                     Tecnologias
                 </h4>
+
 
                 <span>
                     HTML5
@@ -316,20 +457,29 @@
             </div>
 
 
+            <!-- COLUNA 4 -->
+
             <div class="rodape-coluna">
 
                 <h4>
                     Sobre o Projeto
                 </h4>
 
+
                 <p>
-                    O Busca Livro é um projeto educacional
-                    desenvolvido para praticar integração
-                    entre frontend, backend e APIs externas.
+                    A Biblioteca Cloud é um projeto educacional
+                    desenvolvido para praticar integração entre
+                    frontend, backend e APIs externas.
                 </p>
 
-                <a class="botao-github" href="#" aria-label="Link demonstrativo para o GitHub">
+
+                <a
+                    class="botao-github"
+                    href="#"
+                    aria-label="Link demonstrativo para o GitHub">
+
                     Ver no GitHub
+
                 </a>
 
             </div>
@@ -337,10 +487,14 @@
         </div>
 
 
+        <!-- =================================================
+             FINAL DO RODAPÉ
+             ================================================= -->
+
         <div class="rodape-final">
 
             <span>
-                Busca Livro • Projeto educacional
+                Biblioteca Cloud • Projeto educacional
             </span>
 
             <span>
@@ -350,7 +504,14 @@
         </div>
 
     </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
     <script src="script.js"></script>
+
 </body>
 
 </html>
