@@ -201,8 +201,12 @@ formPesquisa.addEventListener("submit", async function (evento) {
             card.classList.add("card-livro");
 
 
-            card.innerHTML = `
-                <div class="icone-livro">📖</div>
+            card.innerHTML =
+    `          ${
+        livro.capa
+            ? `<img src="${livro.capa}" alt="Capa de ${livro.titulo}">`
+            : `<div>Sem capa</div>`
+    }
 
                 <h3>${tituloLivro}</h3>
 

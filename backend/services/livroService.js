@@ -44,7 +44,10 @@ async function pesquisarLivros(titulo) {
 
                 ano:
                     livro.first_publish_year
-                    || 'Não informado'
+                    || 'Não informado',
+                    capa:  livro.cover_i
+                    ? `https://covers.openlibrary.org/b/id/${livro.cover_i}-M.jpg`
+    : null
 
             };
 
