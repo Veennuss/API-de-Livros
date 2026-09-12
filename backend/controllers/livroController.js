@@ -9,7 +9,7 @@ async function pesquisarLivroRotas(req, res) {
     if (!titulo) {
 
         return res.status(400).json({
-            erro: "O título é obrigatório"
+            erro: "O título nao informado"
         });
 
     }
@@ -38,7 +38,7 @@ async function pesquisarLivroRotas(req, res) {
 
 
         return res.status(500).json({
-            erro: "Erro ao pesquisar livros"
+            erro: "Erro interno ou falha ao consultar a API"
         });
 
     }
