@@ -27,10 +27,7 @@ async function pesquisarLivros(titulo) {
 
 
         if (dados.docs.length === 0) {
-
-            console.log('Nenhum livro encontrado.');
-
-            return []
+            return [];
 
         }
 
