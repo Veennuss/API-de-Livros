@@ -12,5 +12,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Frontend rodando em http://localhost:${PORT}`);
+  console.log(`Frontend rodando em http://localhost:${PORT}/api/pesquisa`);
 });
