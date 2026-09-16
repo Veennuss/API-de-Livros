@@ -2,6 +2,8 @@
 const express = require('express');
 const cors = require('cors')
 
+const conectarBanco = require('./config/database');
+
 const app =  express();
 
 
@@ -23,8 +25,16 @@ app.use('/api/livros', livroRoutes);
 const PORT = 3000;
 
 
+
+async function iniciarServidor() {
+ 
+  await conectarBanco();
+
 app.listen(PORT, () => {
      console.log(`Servidor rodando em http://localhost:${PORT}/api/livros/pesquisa`);
 
 });
 
+}
+
+iniciarServidor();
