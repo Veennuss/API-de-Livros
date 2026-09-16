@@ -13,12 +13,8 @@ Este projeto foi construído utilizando as seguintes tecnologias:
 [Open Library API] - API externa para consulta de livros e capas
 HTML5, CSS3 e JavaScript (Frontend)
 
-Passo a Passo
-
-Clone o repositório principal na sua máquina:
-git clone [https://github.com/Veennuss/API-de-Livros]
 Passo a passo:
-1-Clone o repositório na sua máquina;
+1-Clone o repositório na sua máquina: git clone [https://github.com/Veennuss/API-de-Livros];
 2-Entre no cmd do ->Backend<- e escreva 'npm i express cors';
 3-Rode o Frontend na extensão do VScode "Liveserver";
 
