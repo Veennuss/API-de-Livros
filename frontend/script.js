@@ -1,6 +1,7 @@
 // ============================================================
 // ELEMENTOS DA PÁGINA
 // ============================================================
+
 // Formulário de pesquisa
 const formPesquisa = document.getElementById("formPesquisa");
 
@@ -44,11 +45,8 @@ formPesquisa.addEventListener("submit", async function (evento) {
     // ========================================================
 
     if (titulo === "") {
-
         mensagem.textContent = "Digite o título de um livro.";
-
         resultados.innerHTML = "";
-
         return;
     }
 
@@ -58,7 +56,6 @@ formPesquisa.addEventListener("submit", async function (evento) {
     // ========================================================
 
     mensagem.textContent = "🔄 Pesquisando livros...";
-
     resultados.innerHTML = "";
 
     // Desativa o botão durante a pesquisa
@@ -89,11 +86,8 @@ formPesquisa.addEventListener("submit", async function (evento) {
         if (!resposta.ok) {
 
             if (resposta.status === 404) {
-
                 mensagem.textContent = "📚 Nenhum livro encontrado.";
-
             } else {
-
                 mensagem.textContent =
                     "⚠️ Ocorreu um erro na pesquisa.";
             }
@@ -128,9 +122,7 @@ formPesquisa.addEventListener("submit", async function (evento) {
         // ====================================================
 
         if (!livros || livros.length === 0) {
-
             mensagem.textContent = "📚 Nenhum livro encontrado.";
-
             return;
         }
 
@@ -155,14 +147,20 @@ formPesquisa.addEventListener("submit", async function (evento) {
             const info = livro.volumeInfo || livro;
 
 
-            // Título
+            // =================================================
+            // TÍTULO
+            // =================================================
+
             const tituloLivro =
                 info.title ||
                 info.titulo ||
                 "Título não informado";
 
 
-            // Autor
+            // =================================================
+            // AUTOR
+            // =================================================
+
             let autorLivro = "Não informado";
 
             if (info.authors) {
@@ -174,12 +172,14 @@ formPesquisa.addEventListener("submit", async function (evento) {
                 }
 
             } else if (info.autor) {
-
                 autorLivro = info.autor;
             }
 
 
-            // Ano
+            // =================================================
+            // ANO
+            // =================================================
+
             let anoLivro = "Não informado";
 
             if (info.publishedDate) {
@@ -197,16 +197,22 @@ formPesquisa.addEventListener("submit", async function (evento) {
             // =================================================
 
             const card = document.createElement("article");
-
             card.classList.add("card-livro");
 
 
-            card.innerHTML =
-    `          ${
-        livro.capa
-            ? `<img src="${livro.capa}" alt="Capa de ${livro.titulo}">`
-            : `<div>Sem capa</div>`
-    }
+            // Cria a estrutura do card
+            // Reservamos o mesmo espaço para livros sem capa
+
+            card.innerHTML = `
+                <div class="capa-livro ${livro.capa ? "" : "sem-capa"}">
+
+                    ${
+                        livro.capa
+                            ? `<img src="${livro.capa}" alt="Capa de ${tituloLivro}">`
+                            : `<span>Sem capa</span>`
+                    }
+
+                </div>
 
                 <h3>${tituloLivro}</h3>
 
@@ -264,11 +270,8 @@ formPesquisa.addEventListener("submit", async function (evento) {
     finally {
 
         if (botaoBuscar) {
-
             botaoBuscar.disabled = false;
-
             botaoBuscar.textContent = "Buscar";
         }
     }
-
 });

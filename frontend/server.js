@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const PORT = 3001;
 
-// Servidor exclusivo do FRONTEND
+// Servidor exclusivo do FRONTEND.
 app.use(express.static(__dirname));
 
 app.get('/', (req, res) => {
